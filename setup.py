@@ -7,14 +7,19 @@
 from distutils.core import setup
 
 setup(
-    name='StorageAPI',
-    version='1.0',
+    name='storageapi',
+    version='0.1',
     description='http://getstorage.net for Python',
     author='Luke Granger-Brown',
     author_email='oss.getstorage.python@lukegb.com',
     url='http://getstorage.net',
     packages=['storage'],
-    requires=['requests'],
+    requires=[
+        'requests',
+    ],
+    install_requires=[
+        'requests',
+    ],
     scripts=['scripts/storagecli'],
     classifiers=[
         'Development Status :: 3 - Alpha',
