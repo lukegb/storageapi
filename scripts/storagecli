@@ -17,12 +17,14 @@ def upload(parser, api, args):
     with open(args.filename, 'rb') as fh:
         try:
             f = api.object_upload(fh, os.path.basename(args.filename))
-            print("Upload successful")
-            print(" - File ID: %s" % (f.object_id,))
-            print(" - File URL: %s" % (f.url,))
+            if args.url_only:
+                print(f.url)
+            else:
+                print("Upload successful")
+                print(" - File ID: %s" % (f.object_id,))
+                print(" - File URL: %s" % (f.url,))
         except Exception as e:
-            print("Upload failed")
-            print(e)
+            parser.error("Upload failed: " + str(e))
 
 
 def info(parser, api, args):
@@ -41,8 +43,7 @@ def info(parser, api, args):
         print()
         print("File size (bytes): " + fi['size'])
     except Exception as e:
-        print("Fetching file info failed")
-        print(e)
+        parser.error("Fetching info failed: " + str(e))
 
 
 def delete(parser, api, args):
@@ -51,8 +52,7 @@ def delete(parser, api, args):
         f.delete()
         print("File deleted successfully")
     except Exception as e:
-        print("Couldn't delete that file")
-        print(e)
+        parser.error("Couldn't delete file: " + str(e))
 
 
 parser = argparse.ArgumentParser(description='interact with Storage')
@@ -65,6 +65,11 @@ subparsers = parser.add_subparsers(help='sub-command help')
 upl_parser = subparsers.add_parser('upload', help='upload a file')
 upl_parser.add_argument(
     'filename', type=str, help='path to file to upload'
+)
+upl_parser.add_argument(
+    '-u', '--url-only', action='store_const',
+    const=True, default=False, dest='url_only',
+    help='only output the URL of the uploaded file'
 )
 upl_parser.set_defaults(exc=upload)
 

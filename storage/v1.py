@@ -93,7 +93,6 @@ class ApiV1(object):
 
             raise("Failed to upload file: " + exmsg)
 
-        print(resp_json['id'])
         return ApiV1Object(self, resp_json['id'])
 
     def object(self, object_id):
