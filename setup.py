@@ -8,7 +8,7 @@ from distutils.core import setup
 
 setup(
     name='storageapi',
-    version='0.1',
+    version='0.2',
     description='http://getstorage.net for Python',
     author='Luke Granger-Brown',
     author_email='oss.getstorage.python@lukegb.com',
