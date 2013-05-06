@@ -93,4 +93,8 @@ else:
 
 auth = QueryAuth(auth_key)
 api = ApiV1(auth)
+
+if 'exc' not in args:
+    parser.error('Please pick a command to execute.')
+
 args.exc(parser, api, args)
